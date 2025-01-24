@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
     }
 
     public void StartGame()
@@ -64,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     private bool CheckIfTimeEnd()
     {
-        if (elapsedTime - timeEnd > 0)
+        if (elapsedTime - timeEnd > 0 && gameState == GameStateCanva.Game)
         {
             return true;
         }

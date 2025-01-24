@@ -1259,7 +1259,7 @@ MonoBehaviour:
   hanger: 0
   sleep: 0
   money: 0
-  timeEnd: 20
+  timeEnd: 10
   gameState: 0
   menuCanvas: {fileID: 1907951145}
   gameOverCanvas: {fileID: 2126091848}
