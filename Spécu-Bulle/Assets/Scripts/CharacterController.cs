@@ -2,15 +2,31 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Rigidbody2D rbPlayer;
+    private float xPlayer;
+    private float yPlayer;
+    [SerializeField] private float moveSpeed;
+    [SerializeField]private SpriteRenderer srPlayer;
     void Start()
     {
-        
+        rbPlayer = GetComponent<Rigidbody2D>();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
+        Debug.Log(rbPlayer.linearVelocity.x);
+        xPlayer = Input.GetAxis("Horizontal");
+        yPlayer = Input.GetAxis("Vertical");
         
+        rbPlayer.linearVelocity = new Vector2(xPlayer * moveSpeed, yPlayer * moveSpeed);
+
+        if (rbPlayer.linearVelocity.x > 0)
+        {
+            srPlayer.flipX = false;
+        }
+        if (rbPlayer.linearVelocity.x < 0)
+        {
+            srPlayer.flipX = true;
+        }
     }
 }
