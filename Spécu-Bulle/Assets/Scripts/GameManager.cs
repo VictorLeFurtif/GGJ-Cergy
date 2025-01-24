@@ -9,13 +9,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float money;
     [SerializeField] private float timeStart;
     [SerializeField] private float timeEnd;
-    [SerializeField] GameState gameState;
+    public GameStateCanva gameState;
     [SerializeField] private GameObject menuCanvas;
     [SerializeField] private GameObject gameOverCanvas;
     [SerializeField] private GameObject gameCanvas;
     [SerializeField] private List<GameObject> listOfCanvas;
-    private GameManager instance;
-    enum GameState
+    public static GameManager instance;
+    public enum GameStateCanva
     {
         Menu,
         Game,
@@ -44,20 +44,25 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void ChangeGameState(GameStateCanva state)
+    {
+        gameState = state;
+    }
+     
     private void Start()
     {
-        gameState = GameState.Menu;
+        gameState = GameStateCanva.Menu;
     }
 
     private void Update()
     {
         switch (gameState)
         {
-            case GameState.Menu : SetCanvas(menuCanvas);
+            case GameStateCanva.Menu : SetCanvas(menuCanvas);
                 break;
-            case GameState.GameOver : SetCanvas(gameOverCanvas);
+            case GameStateCanva.GameOver : SetCanvas(gameOverCanvas);
                 break;
-            case GameState.Game : SetCanvas(gameCanvas);
+            case GameStateCanva.Game : SetCanvas(gameCanvas);
                 break;
         }
         
