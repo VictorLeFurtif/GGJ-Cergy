@@ -1,12 +1,26 @@
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class PlayerCOntroller : MonoBehaviour
 {
     private Rigidbody2D rbPlayer;
     private float xPlayer;
     private float yPlayer;
     [SerializeField] private float moveSpeed;
     [SerializeField]private SpriteRenderer srPlayer;
+    public static PlayerCOntroller instance;
+    
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
         rbPlayer = GetComponent<Rigidbody2D>();
@@ -14,7 +28,6 @@ public class CharacterController : MonoBehaviour
     
     void Update()
     {
-        Debug.Log(rbPlayer.linearVelocity.x);
         xPlayer = Input.GetAxis("Horizontal");
         yPlayer = Input.GetAxis("Vertical");
         
