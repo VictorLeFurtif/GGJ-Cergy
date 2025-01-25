@@ -21,7 +21,7 @@ public class TriggerZoneManager : MonoBehaviour
         Fridge,
         Computer
     }
-
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
@@ -33,14 +33,13 @@ public class TriggerZoneManager : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-
         inTriggerZone = false; 
         Debug.Log("Exited Trigger Zone");
     }
 
     private void Update()
     {
-            canvaInteractInformation.SetActive(inTriggerZone);
+        {canvaInteractInformation.SetActive(inTriggerZone);}
         
         if (inTriggerZone && Input.GetKeyDown(KeyCode.F))
         {
@@ -60,9 +59,9 @@ public class TriggerZoneManager : MonoBehaviour
 
                 case TriggerState.Computer:
                     Debug.Log("Using computer...");
+                    inTriggerZone = false;
                     if (computerCanvas != null)
                     {
-                        canvaInteractInformation.SetActive(false);
                         computerCanvas.SetActive(true);
                     }
                     break;
