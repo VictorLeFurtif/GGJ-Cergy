@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [Header("Parameters")]
-    [SerializeField] private float hanger;
-    [SerializeField] private float sleep;
+    public float hanger;
+    public float sleep;
     public float money;
     [SerializeField] private float timeEnd;
     public GameStateCanva gameState;
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> listOfCanvas;
     [Header("Time link")]
     [SerializeField] private TextMeshProUGUI timeText;
-    float elapsedTime;
+    public float elapsedTime;
 
     [Header("Less Hunger & Sleep")] 
     [SerializeField] private float hungerDecrementationValue = 0.1f;
