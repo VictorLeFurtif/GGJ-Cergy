@@ -8,7 +8,7 @@ public class PlayerCOntroller : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField]private SpriteRenderer srPlayer;
     public static PlayerCOntroller instance;
-    
+  
     private void Awake()
     {
         if (instance == null)
