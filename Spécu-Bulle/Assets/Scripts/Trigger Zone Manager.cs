@@ -8,28 +8,69 @@ public class TriggerZoneManager : MonoBehaviour
     [SerializeField] private float valueHungerGiven;
     [SerializeField] private float moneyTaken;
 
-    [SerializeField]
-    private float valueSleepGiven;
-
+    [SerializeField] private float valueSleepGiven;
     [SerializeField] private float valueTimeGiven;
-    private void OnTriggerEnter2D(Collider2D other) //for bed
+
+    [SerializeField] private TriggerState triggerState; 
+
+    private bool inTriggerZone = false;
+
+    public enum TriggerState
     {
-        canvaInteractInformation.SetActive(true);
-        if (Input.GetKeyDown(KeyCode.F))
+        Bed,
+        Fridge,
+        Computer
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
+
+        inTriggerZone = true; 
+        Debug.Log("Entered Trigger Zone: " + triggerState);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
+
+        inTriggerZone = false; 
+        Debug.Log("Exited Trigger Zone");
+    }
+
+    private void Update()
+    {
+            canvaInteractInformation.SetActive(inTriggerZone);
+        
+        if (inTriggerZone && Input.GetKeyDown(KeyCode.F))
         {
-            switch (other.gameObject.layer)
+            switch (triggerState)
             {
-                case 3 : GameManager.instance.sleep += valueSleepGiven;
+                case TriggerState.Bed:
+                    Debug.Log("Sleeping...");
+                    GameManager.instance.sleep += valueSleepGiven;
                     GameManager.instance.elapsedTime += valueTimeGiven;
                     break;
-                case 7 : computerCanvas.SetActive(true);
-                    break;
-                case 6 : GameManager.instance.hanger += valueHungerGiven;
+
+                case TriggerState.Fridge:
+                    Debug.Log("Eating...");
+                    GameManager.instance.hanger += valueHungerGiven;
                     GameManager.instance.money -= moneyTaken;
                     break;
+
+                case TriggerState.Computer:
+                    Debug.Log("Using computer...");
+                    if (computerCanvas != null)
+                    {
+                        canvaInteractInformation.SetActive(false);
+                        computerCanvas.SetActive(true);
+                    }
+                    break;
+
+                default:
+                    Debug.Log("No valid trigger state.");
+                    break;
             }
-            
         }
-        
     }
 }
