@@ -15,8 +15,8 @@ public class TriggerZoneManager : MonoBehaviour
     [SerializeField] private TriggerState triggerState; 
 
     private bool inTriggerZone = false;
-    private float timer = 1.0f;
-    private bool  isSleep = false;
+    public float timer = 1.0f;
+    public bool isSleep = false;
 
     public enum TriggerState
     {
@@ -42,6 +42,8 @@ public class TriggerZoneManager : MonoBehaviour
     
     private void Update()
     {
+        if (GameManager.instance.sleep > 100)GameManager.instance.sleep = 100;
+        
         {canvaInteractInformation.SetActive(inTriggerZone);}
         
         if (inTriggerZone && Input.GetKeyDown(KeyCode.F) && isSleep == false)
@@ -49,26 +51,8 @@ public class TriggerZoneManager : MonoBehaviour
             switch (triggerState)
             {
                 case TriggerState.Bed:
-                    bool isSleep = true;
-                    while (isSleep)
-                    {
-                        Debug.Log("IN");
-                        if (timer <= 0)
-                        {
-                            timer = 1.0f;
-                            GameManager.instance.sleep += 10;
-                        }
-                        else
-                        {
-                            timer -= Time.deltaTime;
-                        }
-                        PlayerCOntroller.instance.enabled = false;
-                        if (Input.GetKeyDown(KeyCode.F))
-                        {
-                            isSleep = false;
-                            PlayerCOntroller.instance.enabled = true;
-                        }
-                    }
+                    isSleep = true;
+                    PlayerCOntroller.instance.enabled = false;
                     break;
 
                 case TriggerState.Fridge:
@@ -88,6 +72,24 @@ public class TriggerZoneManager : MonoBehaviour
                     Debug.Log("No valid trigger state.");
                     break;
             }
+        }
+
+        if (!isSleep) return;
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            isSleep = false;
+            PlayerCOntroller.instance.rbPlayer.linearVelocity = Vector2.zero;
+        }
+                        
+        if (timer <= 0)
+        {
+            timer = 1.0f;
+            GameManager.instance.sleep += 10;
+        }
+        else
+        {
+            Debug.Log("Sleep");
+            timer -= Time.deltaTime;
         }
     }
 }
