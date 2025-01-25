@@ -73,7 +73,7 @@ public class StockManager : MonoBehaviour
         for (int i = 0; i < actionList.Count; i++)
         {
             // Instancie un nouveau point
-            var newPoint = Instantiate(GraphPoint, new Vector2(i * 5, actionList[i] / 10), Quaternion.identity);
+            var newPoint = Instantiate(GraphPoint, new Vector2(i * 5 + 10, actionList[i] / 10 + 10), Quaternion.identity);
             GraphPointsList.Add(newPoint);
 
             // Relie ce point au précédent s'il existe
