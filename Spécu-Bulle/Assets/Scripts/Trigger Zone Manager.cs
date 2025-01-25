@@ -15,8 +15,6 @@ public class TriggerZoneManager : MonoBehaviour
     [SerializeField] private TriggerState triggerState; 
 
     private bool inTriggerZone = false;
-    private float timer = 1.0f;
-    private bool  isSleep = false;
 
     public enum TriggerState
     {
@@ -37,6 +35,7 @@ public class TriggerZoneManager : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         inTriggerZone = false; 
+        Debug.Log("Exited Trigger Zone");
     }
     
     
@@ -44,39 +43,24 @@ public class TriggerZoneManager : MonoBehaviour
     {
         {canvaInteractInformation.SetActive(inTriggerZone);}
         
-        if (inTriggerZone && Input.GetKeyDown(KeyCode.F) && isSleep == false)
+        if (inTriggerZone && Input.GetKeyDown(KeyCode.F))
         {
             switch (triggerState)
             {
                 case TriggerState.Bed:
-                    bool isSleep = true;
-                    while (isSleep)
-                    {
-                        Debug.Log("IN");
-                        if (timer <= 0)
-                        {
-                            timer = 1.0f;
-                            GameManager.instance.sleep += 10;
-                        }
-                        else
-                        {
-                            timer -= Time.deltaTime;
-                        }
-                        PlayerCOntroller.instance.enabled = false;
-                        if (Input.GetKeyDown(KeyCode.F))
-                        {
-                            isSleep = false;
-                            PlayerCOntroller.instance.enabled = true;
-                        }
-                    }
+                    Debug.Log("Sleeping...");
+                        GameManager.instance.sleep += valueSleepGiven;
+                        GameManager.instance.elapsedTime += valueTimeGiven;
                     break;
 
                 case TriggerState.Fridge:
+                    Debug.Log("Eating...");
                     GameManager.instance.hanger += valueHungerGiven;
                     GameManager.instance.money -= moneyTaken;
                     break;
 
                 case TriggerState.Computer:
+                    Debug.Log("Using computer...");
                     inTriggerZone = false;
                     if (computerCanvas != null)
                     {
