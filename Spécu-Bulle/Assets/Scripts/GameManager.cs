@@ -3,20 +3,30 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Parameters")]
     [SerializeField] private float hanger;
     [SerializeField] private float sleep;
-    [SerializeField] private float money;
+    public float money;
     [SerializeField] private float timeEnd;
     public GameStateCanva gameState;
+    [Header("SLider")] [SerializeField] private Slider sliderHunger;
+    [SerializeField] private Slider sliderSleep;
+    [Header("Canvas")]
     [SerializeField] private GameObject menuCanvas;
     [SerializeField] private GameObject gameOverCanvas;
     [SerializeField] private GameObject gameCanvas;
     [SerializeField] private List<GameObject> listOfCanvas;
+    [Header("Time link")]
     [SerializeField] private TextMeshProUGUI timeText;
     float elapsedTime;
+
+    [Header("Less Hunger & Sleep")] 
+    [SerializeField] private float hungerDecrementationValue = 0.1f;
+    [SerializeField] private float sleepDecrementationValue = 0.07f;
     public static GameManager instance;
     public enum GameStateCanva
     {
@@ -34,6 +44,19 @@ public class GameManager : MonoBehaviour
         canvas.SetActive(true);
     }
 
+    private void UpdateValuesOfParameters()
+    {
+        if (gameState != GameStateCanva.Game) return;
+        sleep -= sleepDecrementationValue;
+        hanger -= hungerDecrementationValue;
+    }
+    
+    private void UpdatingSliders()
+    {
+        sliderHunger.value = hanger;
+        sliderSleep.value = sleep;
+    }
+    
     private void Awake()
     {
         if (instance == null)
@@ -58,6 +81,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        InvokeRepeating(nameof(UpdateValuesOfParameters),1f,1f);
         gameState = GameStateCanva.Menu;
     }
 
@@ -80,6 +104,9 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+        
+        UpdatingSliders(); //update sliders to refresh value
+        
         if (CheckIfTimeEnd())
         {
             gameState = GameStateCanva.GameOver;
