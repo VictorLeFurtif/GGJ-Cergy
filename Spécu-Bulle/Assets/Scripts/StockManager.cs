@@ -7,24 +7,17 @@ using Random = UnityEngine.Random;
 public class StockManager : MonoBehaviour
 {
     // Variables
-    public int actionValues;
-    public int fluctuationRate;
-    public int fluctuationValue;
-    public int fluctuationAmount;
-    public int errorMargin;
-    public int explodingAmount;
-    public int explodingRate;
+    public int actionValue;
     
     public float timer;
     
     public GameObject GraphPoint;
+    private List<GameObject> GraphPointsList = new List<GameObject>();
+    
     public int playerMoney;
     public int playerActions = 0;
-    
-    private List<GameObject> GraphPointsList = new List<GameObject>();
 
     private Queue<int> lastActionsValues = new Queue<int>();
-
 
     // Update is called once per frame
     void Update()
@@ -48,8 +41,6 @@ public class StockManager : MonoBehaviour
     {
         if (timer <= 0)
         {
-            fluctuationAmount = Random.Range(2*fluctuationValue, 7*fluctuationValue);
-            explodingAmount = Random.Range(8*fluctuationValue, 15*fluctuationValue);
             timer = 1.0f;
             UpdateStock();
             UpdateGraph();
@@ -68,6 +59,7 @@ public class StockManager : MonoBehaviour
             actionList.Add(VARIABLE);
         }
 
+        // Supprime les anciens points du graphique
         if (GraphPointsList.Count != 0)
         {
             foreach (var VARIABLE in GraphPointsList)
@@ -76,54 +68,52 @@ public class StockManager : MonoBehaviour
             }
             GraphPointsList.Clear();
         }
-        
+    
+        // Crée les nouveaux points et les lignes
         for (int i = 0; i < actionList.Count; i++)
         {
-            Debug.Log(actionList[i]);
-            GraphPointsList.Add(Instantiate(GraphPoint, new Vector2(i*5, actionList[i]/10), Quaternion.identity));
+            // Instancie un nouveau point
+            var newPoint = Instantiate(GraphPoint, new Vector2(i * 5, actionList[i] / 10), Quaternion.identity);
+            GraphPointsList.Add(newPoint);
+
+            // Relie ce point au précédent s'il existe
+            if (i > 0)
+            {
+                LineRenderer lineRenderer = newPoint.GetComponent<LineRenderer>();
+                if (lineRenderer != null)
+                {
+                    lineRenderer.positionCount = 2;
+                    lineRenderer.SetPosition(0, GraphPointsList[i - 1].transform.position); // Point précédent
+                    lineRenderer.SetPosition(1, newPoint.transform.position);             // Point actuel
+                }
+            }
         }
     }
 
+
     private void UpdateStock()
     {
-    
-        if ((Random.Range(0, 100) <= fluctuationRate  && Random.Range(0, 100) >= errorMargin) || (Random.Range(0, 100) <= fluctuationRate && Random.Range(0, 100) <= errorMargin))
-        {
-            if (Random.Range(0, 100) <= explodingRate)
-            {
-                actionValues += fluctuationAmount+explodingAmount;
-                fluctuationRate -= Random.Range(1,5);
-            }
-            actionValues += fluctuationAmount;
-            fluctuationRate -= Random.Range(1,5);
-        }
-        else
-        {
-            if (Random.Range(0, 100) <= explodingRate)
-            {
-                actionValues -= fluctuationAmount+explodingAmount;
-                fluctuationRate += Random.Range(5,15);
-            }
-            actionValues -= fluctuationAmount;
-            fluctuationRate += Random.Range(8,20);
-        }
+        actionValue = Random.Range(0, 500);
         
-        lastActionsValues.Enqueue(actionValues);
+        lastActionsValues.Enqueue(actionValue);
         if (lastActionsValues.Count > 10) lastActionsValues.Dequeue();
     }
 
     private void BuyStock()
     {
-        if (playerMoney >= actionValues)
+        if (playerMoney >= actionValue)
         {
-            playerMoney -= actionValues;
+            playerMoney -= actionValue;
             playerActions++;
         }
     }
 
     private void SellStock()
     {
-        playerMoney += actionValues;
-        playerActions--;
+        if (playerActions >= 1)
+        {
+            playerMoney += actionValue;
+            playerActions--;
+        }
     }
 }
