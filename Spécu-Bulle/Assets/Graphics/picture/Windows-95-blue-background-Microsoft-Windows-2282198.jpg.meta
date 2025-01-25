@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Windows-95-blue-background-Microsoft-Windows-2282198_0: -7240808375921804539
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

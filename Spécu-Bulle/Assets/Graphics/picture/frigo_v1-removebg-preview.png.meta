@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      frigo_v1-removebg-preview_0: -602890690375224404
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -15,6 +15,8 @@ public class TriggerZoneManager : MonoBehaviour
     [SerializeField] private TriggerState triggerState; 
 
     private bool inTriggerZone = false;
+    public float timer = 1.0f;
+    public bool isSleep = false;
 
     public enum TriggerState
     {
@@ -35,32 +37,30 @@ public class TriggerZoneManager : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         inTriggerZone = false; 
-        Debug.Log("Exited Trigger Zone");
     }
     
     
     private void Update()
     {
+        if (GameManager.instance.sleep > 100)GameManager.instance.sleep = 100;
+        
         {canvaInteractInformation.SetActive(inTriggerZone);}
         
-        if (inTriggerZone && Input.GetKeyDown(KeyCode.F))
+        if (inTriggerZone && Input.GetKeyDown(KeyCode.F) && isSleep == false)
         {
             switch (triggerState)
             {
                 case TriggerState.Bed:
-                    Debug.Log("Sleeping...");
-                        GameManager.instance.sleep += valueSleepGiven;
-                        GameManager.instance.elapsedTime += valueTimeGiven;
+                    isSleep = true;
+                    PlayerCOntroller.instance.enabled = false;
                     break;
 
                 case TriggerState.Fridge:
-                    Debug.Log("Eating...");
                     GameManager.instance.hanger += valueHungerGiven;
                     GameManager.instance.money -= moneyTaken;
                     break;
 
                 case TriggerState.Computer:
-                    Debug.Log("Using computer...");
                     inTriggerZone = false;
                     if (computerCanvas != null)
                     {
@@ -72,6 +72,24 @@ public class TriggerZoneManager : MonoBehaviour
                     Debug.Log("No valid trigger state.");
                     break;
             }
+        }
+
+        if (!isSleep) return;
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            isSleep = false;
+            PlayerCOntroller.instance.rbPlayer.linearVelocity = Vector2.zero;
+        }
+                        
+        if (timer <= 0)
+        {
+            timer = 1.0f;
+            GameManager.instance.sleep += 10;
+        }
+        else
+        {
+            Debug.Log("Sleep");
+            timer -= Time.deltaTime;
         }
     }
 }

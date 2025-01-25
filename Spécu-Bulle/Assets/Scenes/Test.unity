@@ -1719,6 +1719,8 @@ MonoBehaviour:
   valueSleepGiven: 0
   valueTimeGiven: 0
   triggerState: 2
+  timer: 1
+  isSleep: 0
 --- !u!1 &580058627
 GameObject:
   m_ObjectHideFlags: 0
@@ -2258,6 +2260,8 @@ MonoBehaviour:
   valueSleepGiven: 0
   valueTimeGiven: 0
   triggerState: 0
+  timer: 1
+  isSleep: 0
 --- !u!1 &743971585
 GameObject:
   m_ObjectHideFlags: 0
@@ -3573,6 +3577,8 @@ MonoBehaviour:
   valueSleepGiven: 0
   valueTimeGiven: 0
   triggerState: 1
+  timer: 1
+  isSleep: 0
 --- !u!1 &1255993385
 GameObject:
   m_ObjectHideFlags: 0
@@ -5090,7 +5096,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!212 &1927055012
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5174,6 +5180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11a0242cfa4c94e4ea30e69111655df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rbPlayer: {fileID: 0}
   moveSpeed: 6.09
   srPlayer: {fileID: 1927055012}
 --- !u!1 &1970814425
