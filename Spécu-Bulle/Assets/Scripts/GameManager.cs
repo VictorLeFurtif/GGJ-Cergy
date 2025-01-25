@@ -24,8 +24,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timeText;
     float elapsedTime;
 
-    public int playerActions = 0;
-
     [Header("Less Hunger & Sleep")] 
     [SerializeField] private float hungerDecrementationValue = 0.1f;
     [SerializeField] private float sleepDecrementationValue = 0.07f;

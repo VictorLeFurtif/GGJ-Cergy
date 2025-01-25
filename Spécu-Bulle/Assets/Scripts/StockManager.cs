@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +11,13 @@ public class StockManager : MonoBehaviour
     public int fluctuationRate;
     public int fluctuationAmount;
     public float timer;
+    public GameObject GraphPoint;
+    public int playerMoney;
+    public int playerActions = 0;
+    
+    private List<GameObject> GraphPointsList = new List<GameObject>(5);
+
+    private Queue<int> lastActionsValues = new Queue<int>(5);
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,13 +33,13 @@ public class StockManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             BuyStock();
-            Debug.Log(GameManager.instance.money);
+            Debug.Log(playerMoney);
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
             SellStock();
-            Debug.Log(GameManager.instance.money);
+            Debug.Log(playerMoney);
         }
     }
 
@@ -40,10 +49,36 @@ public class StockManager : MonoBehaviour
         {
             timer = 1.0f;
             UpdateStock();
+            UpdateGraph();
         }
         else
         {
             timer -= Time.deltaTime;
+        }
+    }
+
+    private void UpdateGraph()
+    {
+        List<int> actionList = new List<int>(5);
+        foreach (var VARIABLE in lastActionsValues)
+        {
+            actionList.Add(VARIABLE);
+        }
+
+        if (GraphPointsList.Count != 0)
+        {
+            foreach (var VARIABLE in GraphPointsList)
+            {
+                Destroy(VARIABLE);
+            }
+            GraphPointsList.Clear();
+        }
+        
+        
+        for (int i = 0; i < actionList.Count; i++)
+        {
+            Debug.Log(actionList[i]);
+            GraphPointsList.Add(Instantiate(GraphPoint, new Vector2(i*10, actionList[i]/10), Quaternion.identity));
         }
     }
 
@@ -60,20 +95,23 @@ public class StockManager : MonoBehaviour
             actionValues -= fluctuationAmount;
             fluctuationRate += Random.Range(2,8);
         }
+        
+        lastActionsValues.Enqueue(actionValues);
+        if (lastActionsValues.Count > 5) lastActionsValues.Dequeue();
     }
 
     private void BuyStock()
     {
-        if (GameManager.instance.money >= actionValues)
+        if (playerMoney >= actionValues)
         {
-            GameManager.instance.money -= actionValues;
-            GameManager.instance.playerActions++;
+            playerMoney -= actionValues;
+            playerActions++;
         }
     }
 
     private void SellStock()
     {
-        GameManager.instance.money += actionValues;
-        GameManager.instance.playerActions--;
+        playerMoney += actionValues;
+        playerActions--;
     }
 }
