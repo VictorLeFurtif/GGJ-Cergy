@@ -20,6 +20,18 @@ public class StockManager : MonoBehaviour
     void Update()
     {
         UpdateTimer();
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            BuyStock();
+            Debug.Log(GameManager.instance.money);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            SellStock();
+            Debug.Log(GameManager.instance.money);
+        }
     }
 
     private void UpdateTimer()
@@ -28,7 +40,6 @@ public class StockManager : MonoBehaviour
         {
             timer = 1.0f;
             UpdateStock();
-            Debug.Log(actionValues);
         }
         else
         {
@@ -49,5 +60,20 @@ public class StockManager : MonoBehaviour
             actionValues -= fluctuationAmount;
             fluctuationRate += Random.Range(2,8);
         }
+    }
+
+    private void BuyStock()
+    {
+        if (GameManager.instance.money >= actionValues)
+        {
+            GameManager.instance.money -= actionValues;
+            GameManager.instance.playerActions++;
+        }
+    }
+
+    private void SellStock()
+    {
+        GameManager.instance.money += actionValues;
+        GameManager.instance.playerActions--;
     }
 }
