@@ -3191,7 +3191,9 @@ MonoBehaviour:
   actionText: {fileID: 1763236975}
   actionValueText: {fileID: 1153010364}
   GraphPoint: {fileID: 4386117643282523658, guid: b5dfff2a2e698704baa84ded0c3a2a29, type: 3}
-  playerMoney: 1000
+  level: 0
+  levelContract: d007000070170000401f0000983a0000
+  playerMoney: 500
   playerActions: 0
 --- !u!4 &1080295930
 Transform:
@@ -5006,7 +5008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hanger: 100
   sleep: 100
-  timeEnd: 654.85
+  timeEnd: 120
   gameState: 0
   sliderHunger: {fileID: 1831254923}
   sliderSleep: {fileID: 1276784784}
