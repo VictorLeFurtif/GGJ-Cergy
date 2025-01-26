@@ -5430,6 +5430,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hanger: 100
   sleep: 100
+  hangerStock: 0
+  sleepStock: 0
   timeEnd: 120
   gameState: 0
   sliderHunger: {fileID: 1831254923}
@@ -6862,7 +6864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rbPlayer: {fileID: 0}
-  moveSpeed: 6.09
+  moveSpeed: 10
   moveSpeedStock: 0
   moveSpeedReduce: 0
   srPlayer: {fileID: 1927055012}
