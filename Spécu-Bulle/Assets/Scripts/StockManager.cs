@@ -43,8 +43,6 @@ public class StockManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        
         textobjectif.text = "Objectif : " + levelContract[level].ToString();
         textday.text = "Jour : " + level.ToString();
         moneyText.text = "MONEY : "+ playerMoney.ToString();
@@ -72,6 +70,10 @@ public class StockManager : MonoBehaviour
             timer = 2.0f;
             UpdateStock();
             UpdateGraph();
+            if (playerMoney <= 0 && playerActions == 0)
+            {
+                GameManager.instance.timeEnd = 0;
+            }
         }
         else
         {

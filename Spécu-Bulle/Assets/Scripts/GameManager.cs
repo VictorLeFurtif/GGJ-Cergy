@@ -149,6 +149,5 @@ public class GameManager : MonoBehaviour
                 PlayerCOntroller.instance.enabled = enabled;
                 break;
         }
-        
     }
 }
