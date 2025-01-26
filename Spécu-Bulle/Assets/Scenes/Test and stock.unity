@@ -2775,7 +2775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionValue: 0
-  timer: 1
+  timer: 0
   GraphPoint: {fileID: 4386117643282523658, guid: b5dfff2a2e698704baa84ded0c3a2a29, type: 3}
   playerMoney: 1000
   playerActions: 0
@@ -3672,7 +3672,7 @@ Transform:
   m_GameObject: {fileID: 1274517056}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35, y: 45, z: -10}
+  m_LocalPosition: {x: 35, y: 42, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
