@@ -3337,7 +3337,9 @@ MonoBehaviour:
   actionText: {fileID: 1763236975}
   actionValueText: {fileID: 1153010364}
   GraphPoint: {fileID: 4386117643282523658, guid: b5dfff2a2e698704baa84ded0c3a2a29, type: 3}
-  playerMoney: 1000
+  level: 0
+  levelContract: d007000070170000401f0000983a0000
+  playerMoney: 500
   playerActions: 0
 --- !u!4 &1080295930
 Transform:
@@ -5121,55 +5123,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322343591}
   m_CullTransparentMesh: 1
---- !u!1 &1391420298
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1391420300}
-  - component: {fileID: 1391420299}
-  m_Layer: 0
-  m_Name: Global Volume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1391420299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1391420298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IsGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 3f9215ea0144899419cfbc0957140d3f, type: 2}
---- !u!4 &1391420300
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1391420298}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.9743955, y: -1.0654275, z: 0.011317367}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1427826982
 GameObject:
   m_ObjectHideFlags: 0
@@ -5201,9 +5154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hanger: 100
   sleep: 100
-  hangerstock: 0
-  sleepstock: 0
-  timeEnd: 654.85
+  timeEnd: 120
   gameState: 0
   sliderHunger: {fileID: 1831254923}
   sliderSleep: {fileID: 1276784784}
@@ -6615,7 +6566,7 @@ Transform:
   m_GameObject: {fileID: 1927055009}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.27, y: -0.21, z: 0}
+  m_LocalPosition: {x: 1.25, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6636,8 +6587,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rbPlayer: {fileID: 0}
   moveSpeed: 6.09
-  moveSpeedStock: 0
-  moveSpeedReduce: 0
   srPlayer: {fileID: 1927055012}
 --- !u!1 &1970814425
 GameObject:
@@ -7156,4 +7105,3 @@ SceneRoots:
   - {fileID: 1125161108}
   - {fileID: 1274517060}
   - {fileID: 1070621088}
-  - {fileID: 1391420300}
