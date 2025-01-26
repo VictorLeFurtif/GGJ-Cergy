@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [Header("Parameters")]
     public float hanger;
     public float sleep;
+    public float hangerstock;
+    public float sleepstock;
     [SerializeField] private float timeEnd;
     public GameStateCanva gameState;
     [Header("SLider")] [SerializeField] private Slider sliderHunger;
@@ -31,7 +33,8 @@ public class GameManager : MonoBehaviour
     {
         Menu,
         Game,
-        GameOver
+        GameOver,
+        Win,
     }
 
     private void SetCanvas(GameObject canvas)
@@ -82,6 +85,8 @@ public class GameManager : MonoBehaviour
     {
         InvokeRepeating(nameof(UpdateValuesOfParameters),1f,1f);
         gameState = GameStateCanva.Menu;
+        hangerstock = hanger;
+        sleepstock = sleep;
     }
 
     private bool CheckIfTimeEnd()
@@ -103,10 +108,17 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        
+        if (hanger < hangerstock/2 || sleep < sleepstock / 2)
+        {
+            PlayerCOntroller.instance.moveSpeed = PlayerCOntroller.instance.moveSpeedReduce;
+        }
+        else
+        {
+            PlayerCOntroller.instance.moveSpeed = PlayerCOntroller.instance.moveSpeedStock;
+        }
         UpdatingSliders(); //update sliders to refresh value
         
-        if (CheckIfTimeEnd())
+        if (CheckIfTimeEnd() || sleep < 0 || hanger < 0)
         {
             gameState = GameStateCanva.GameOver;
         }

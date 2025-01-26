@@ -5,7 +5,9 @@ public class PlayerCOntroller : MonoBehaviour
     public Rigidbody2D rbPlayer;
     private float xPlayer;
     private float yPlayer;
-    [SerializeField] private float moveSpeed;
+    public float moveSpeed;
+    public float moveSpeedStock;
+    public float moveSpeedReduce;
     [SerializeField]private SpriteRenderer srPlayer;
     public static PlayerCOntroller instance;
   
@@ -24,6 +26,8 @@ public class PlayerCOntroller : MonoBehaviour
     void Start()
     {
         rbPlayer = GetComponent<Rigidbody2D>();
+        moveSpeedReduce = moveSpeed / 2;
+        moveSpeedStock = moveSpeed;
     }
     
     void Update()
