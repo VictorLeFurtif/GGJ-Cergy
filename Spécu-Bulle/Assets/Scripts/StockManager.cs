@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,18 +11,36 @@ public class StockManager : MonoBehaviour
     public int actionValue;
     
     public float timer;
-    
+    [SerializeField] private TextMeshProUGUI moneyText;
+    [SerializeField] private TextMeshProUGUI actionText;
+    [SerializeField] private TextMeshPro actionValueText;
     public GameObject GraphPoint;
     private List<GameObject> GraphPointsList = new List<GameObject>();
+    public static StockManager instance;
     
     public int playerMoney;
     public int playerActions = 0;
 
     private Queue<int> lastActionsValues = new Queue<int>();
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        moneyText.text = "MONEY : "+ playerMoney.ToString();
+        actionText.text = "ACTION : " + playerActions.ToString();
+        actionValueText.text = "Stock Value : " + actionValue.ToString() + " $";
         UpdateTimer();
 
         if (Input.GetKeyDown(KeyCode.B))
@@ -41,7 +60,7 @@ public class StockManager : MonoBehaviour
     {
         if (timer <= 0)
         {
-            timer = 1.0f;
+            timer = 2.0f;
             UpdateStock();
             UpdateGraph();
         }
@@ -99,7 +118,7 @@ public class StockManager : MonoBehaviour
         if (lastActionsValues.Count > 10) lastActionsValues.Dequeue();
     }
 
-    private void BuyStock()
+    public void BuyStock()
     {
         if (playerMoney >= actionValue)
         {
@@ -108,7 +127,7 @@ public class StockManager : MonoBehaviour
         }
     }
 
-    private void SellStock()
+    public void SellStock()
     {
         if (playerActions >= 1)
         {

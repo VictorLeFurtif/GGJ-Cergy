@@ -7,7 +7,7 @@ public class TriggerZoneManager : MonoBehaviour
     [SerializeField] private GameObject canvaInteractInformation;
     [SerializeField] private GameObject computerCanvas;
     [SerializeField] private float valueHungerGiven;
-    [SerializeField] private float moneyTaken;
+    [SerializeField] private int moneyTaken;
 
     [SerializeField] private float valueSleepGiven;
     [SerializeField] private float valueTimeGiven;
@@ -25,12 +25,11 @@ public class TriggerZoneManager : MonoBehaviour
         Computer
     }
     
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
 
         inTriggerZone = true; 
-        Debug.Log("Entered Trigger Zone: " + triggerState);
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -43,8 +42,10 @@ public class TriggerZoneManager : MonoBehaviour
     private void Update()
     {
         if (GameManager.instance.sleep > 100)GameManager.instance.sleep = 100;
+        if(GameManager.instance.hanger > 100)GameManager.instance.hanger = 100;
         
-        {canvaInteractInformation.SetActive(inTriggerZone);}
+       canvaInteractInformation.SetActive(inTriggerZone && !computerCanvas.activeSelf);
+
         
         if (inTriggerZone && Input.GetKeyDown(KeyCode.F) && isSleep == false)
         {
@@ -57,7 +58,7 @@ public class TriggerZoneManager : MonoBehaviour
 
                 case TriggerState.Fridge:
                     GameManager.instance.hanger += valueHungerGiven;
-                    GameManager.instance.money -= moneyTaken;
+                    StockManager.instance.playerMoney-= moneyTaken;
                     break;
 
                 case TriggerState.Computer:

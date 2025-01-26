@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     [Header("Parameters")]
     public float hanger;
     public float sleep;
-    public float money;
     [SerializeField] private float timeEnd;
     public GameStateCanva gameState;
     [Header("SLider")] [SerializeField] private Slider sliderHunger;
