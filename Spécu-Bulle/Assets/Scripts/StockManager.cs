@@ -17,6 +17,11 @@ public class StockManager : MonoBehaviour
     public GameObject GraphPoint;
     private List<GameObject> GraphPointsList = new List<GameObject>();
     public static StockManager instance;
+    [SerializeField] private TextMeshProUGUI textobjectif;
+    [SerializeField] private TextMeshProUGUI textday;
+
+    public int level;
+    [SerializeField] private List<int> levelContract;
     
     public int playerMoney;
     public int playerActions = 0;
@@ -38,6 +43,8 @@ public class StockManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        textobjectif.text = "Objectif : " + levelContract[level].ToString();
+        textday.text = "Jour : " + level.ToString();
         moneyText.text = "MONEY : "+ playerMoney.ToString();
         actionText.text = "ACTION : " + playerActions.ToString();
         actionValueText.text = "Stock Value : " + actionValue.ToString() + " $";
@@ -107,6 +114,22 @@ public class StockManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool CheckContract()
+    {
+        if (playerMoney >= levelContract[level])
+        {
+            Debug.Log("jour suivant");
+            playerMoney -= levelContract[level];
+            level++;
+            GameManager.instance.elapsedTime = 0;
+            GameManager.instance.timeEnd = 120;
+            GameManager.instance.hanger = 100;
+            GameManager.instance.sleep = 100;
+            return false;
+        }
+        else { return true; }
     }
 
 

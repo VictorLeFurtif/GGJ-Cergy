@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("Parameters")]
     public float hanger;
     public float sleep;
-    [SerializeField] private float timeEnd;
+    public float timeEnd;
     public GameStateCanva gameState;
     [Header("SLider")] [SerializeField] private Slider sliderHunger;
     [SerializeField] private Slider sliderSleep;
@@ -88,7 +88,8 @@ public class GameManager : MonoBehaviour
     {
         if (elapsedTime - timeEnd > 0 && gameState == GameStateCanva.Game)
         {
-            return true;
+            
+            return StockManager.instance.CheckContract();
         }
         else
         {
