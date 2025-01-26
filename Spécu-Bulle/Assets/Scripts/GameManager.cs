@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
         }
         
         elapsedTime += Time.deltaTime;
-        timeText.text = "Timer: " + elapsedTime.ToString("0.00");
+        timeText.text = "Timer: " + (timeEnd - elapsedTime).ToString("0.00");
         
         switch (gameState)
         {
