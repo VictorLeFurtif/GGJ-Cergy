@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     [Header("Less Hunger & Sleep")] 
     [SerializeField] private float hungerDecrementationValue = 0.1f;
     [SerializeField] private float sleepDecrementationValue = 0.07f;
+    [SerializeField] private GameObject winCanvas;
     public static GameManager instance;
     public enum GameStateCanva
     {
@@ -36,7 +37,9 @@ public class GameManager : MonoBehaviour
         GameOver,
         Win
     }
-
+    
+    
+    
     private void SetCanvas(GameObject canvas)
     {
         foreach (GameObject obj in listOfCanvas)
@@ -71,6 +74,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StartMenu()
+    {
+        gameState = GameStateCanva.Menu;
+    }
     public void StartGame()
     {
         gameState = GameStateCanva.Game;
@@ -93,7 +100,7 @@ public class GameManager : MonoBehaviour
     {
         if (elapsedTime - timeEnd > 0 && gameState == GameStateCanva.Game)
         {
-            
+            Debug.Log("Check fin");
             return StockManager.instance.CheckContract();
         }
         else
@@ -137,6 +144,9 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStateCanva.Game : SetCanvas(gameCanvas);
                 PlayerCOntroller.instance.enabled = true;
+                break;
+            case GameStateCanva.Win : SetCanvas(winCanvas);
+                PlayerCOntroller.instance.enabled = enabled;
                 break;
         }
         

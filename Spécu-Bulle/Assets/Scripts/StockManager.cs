@@ -43,6 +43,8 @@ public class StockManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        
         textobjectif.text = "Objectif : " + levelContract[level].ToString();
         textday.text = "Jour : " + level.ToString();
         moneyText.text = "MONEY : "+ playerMoney.ToString();
@@ -120,14 +122,23 @@ public class StockManager : MonoBehaviour
     {
         if (playerMoney >= levelContract[level])
         {
-            Debug.Log("jour suivant");
-            playerMoney -= levelContract[level];
-            level++;
-            GameManager.instance.elapsedTime = 0;
-            GameManager.instance.timeEnd = 120;
-            GameManager.instance.hanger = 100;
-            GameManager.instance.sleep = 100;
-            return false;
+            if (level == 4)
+            {
+                Debug.Log("FIN");
+                GameManager.instance.gameState = GameManager.GameStateCanva.Win;
+                return false;
+            }
+            else
+            {
+                Debug.Log("jour suivant");
+                playerMoney -= levelContract[level];
+                level++;
+                GameManager.instance.elapsedTime = 0;
+                GameManager.instance.timeEnd = 120;
+                GameManager.instance.hanger = 100;
+                GameManager.instance.sleep = 100;
+                return false;
+            }
         }
         else { return true; }
     }
