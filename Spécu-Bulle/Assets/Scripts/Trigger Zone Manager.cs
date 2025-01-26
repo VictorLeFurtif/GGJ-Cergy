@@ -17,6 +17,7 @@ public class TriggerZoneManager : MonoBehaviour
     private bool inTriggerZone = false;
     public float timer = 1.0f;
     public bool isSleep = false;
+   
 
     public enum TriggerState
     {
@@ -43,8 +44,7 @@ public class TriggerZoneManager : MonoBehaviour
     {
         if (GameManager.instance.sleep > 100)GameManager.instance.sleep = 100;
         if(GameManager.instance.hanger > 100)GameManager.instance.hanger = 100;
-        
-       canvaInteractInformation.SetActive(inTriggerZone && !computerCanvas.activeSelf);
+        canvaInteractInformation.SetActive(inTriggerZone && !computerCanvas.activeSelf);
 
         
         if (inTriggerZone && Input.GetKeyDown(KeyCode.F) && isSleep == false)
@@ -53,16 +53,19 @@ public class TriggerZoneManager : MonoBehaviour
             {
                 case TriggerState.Bed:
                     isSleep = true;
+                    SoundManager.instance.PlaySound(SoundManager.instance.sleepSound, transform.position);
                     PlayerCOntroller.instance.enabled = false;
                     break;
 
                 case TriggerState.Fridge:
                     GameManager.instance.hanger += valueHungerGiven;
                     StockManager.instance.playerMoney-= moneyTaken;
+                    SoundManager.instance.PlaySound(SoundManager.instance.eatingSound, transform.position);
                     break;
 
                 case TriggerState.Computer:
                     inTriggerZone = false;
+                    SoundManager.instance.PlaySound(SoundManager.instance.computeurSound, transform.position);
                     if (computerCanvas != null)
                     {
                         computerCanvas.SetActive(true);
