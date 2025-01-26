@@ -7,7 +7,9 @@ public class SoundManager : MonoBehaviour
 {
    public static SoundManager instance;
    [SerializeField] private AudioSource _audioSource;
-  public AudioClip running;
+  public AudioClip eatingSound;
+  public AudioClip sleepSound;
+  public AudioClip computeurSound;
    public void PlaySound(AudioClip clip, Vector3 pos)
    {
       PlayClipAtPoint(clip, pos, 1, Random.Range(0.8f, 1.15f), 60);
@@ -22,6 +24,8 @@ public class SoundManager : MonoBehaviour
       {
          Destroy(gameObject);
       }
+
+      _audioSource.volume = 0.7f;
    }
    public static void PlayClipAtPoint(AudioClip clip, Vector3 position, [UnityEngine.Internal.DefaultValue("1.0F")] float volume, float pitch, float range)
    {
